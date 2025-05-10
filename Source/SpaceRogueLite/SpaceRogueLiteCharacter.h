@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "SpaceRogueLiteCharacter.generated.h"
 
+class UInputMappingContext;
+
 UCLASS(Blueprintable)
 class ASpaceRogueLiteCharacter : public ACharacter
 {
@@ -22,6 +24,18 @@ public:
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 
+protected:
+	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	class UInputAction* MoveForwardAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Input")
+	class UInputAction* MoveRightAction;
+
+	void MoveForward(const struct FInputActionValue& Value);
+	void MoveRight(const struct FInputActionValue& Value);
+	
 private:
 	/** Top down camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
@@ -30,5 +44,6 @@ private:
 	/** Camera boom positioning the camera above the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
+
 };
 

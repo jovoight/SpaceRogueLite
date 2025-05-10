@@ -1,9 +1,10 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "SpaceRogueLiteCharacter.h"
+
+#include "EnhancedInputComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
-#include "Components/DecalComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -43,9 +44,40 @@ ASpaceRogueLiteCharacter::ASpaceRogueLiteCharacter()
 	// Activate ticking in order to update the cursor every frame.
 	PrimaryActorTick.bCanEverTick = true;
 	PrimaryActorTick.bStartWithTickEnabled = true;
+
+	OverrideInputComponentClass = UEnhancedInputComponent::StaticClass();
 }
 
 void ASpaceRogueLiteCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
+}
+
+void ASpaceRogueLiteCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
+{
+	Super::SetupPlayerInputComponent(InputComponent);
+
+	if (UEnhancedInputComponent* EnhancedInput = Cast<UEnhancedInputComponent>(InputComponent))
+	{
+		EnhancedInput->BindAction(MoveForwardAction, ETriggerEvent::Triggered, this, &ASpaceRogueLiteCharacter::MoveForward);
+		EnhancedInput->BindAction(MoveRightAction, ETriggerEvent::Triggered, this,  &ASpaceRogueLiteCharacter::MoveRight);
+	}
+}
+
+void ASpaceRogueLiteCharacter::MoveForward(const struct FInputActionValue& Value)
+{
+	const float DirectionValue = Value.Get<float>();
+	if (Controller && DirectionValue != 0.0f)
+	{
+		AddMovementInput(FVector::ForwardVector, DirectionValue);
+	}
+}
+
+void ASpaceRogueLiteCharacter::MoveRight(const struct FInputActionValue& Value)
+{
+	const float DirectionValue = Value.Get<float>();
+	if (Controller && DirectionValue != 0.0f)
+	{
+		AddMovementInput(FVector::RightVector, DirectionValue);
+	}
 }
