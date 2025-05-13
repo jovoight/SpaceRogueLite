@@ -15,7 +15,7 @@ ASpaceRogueLiteGameMode::ASpaceRogueLiteGameMode()
 	if (PlayerPawnBPClass.Class != nullptr)
 	{
 		DefaultPawnClass = PlayerPawnBPClass.Class;
-	}
+	} 
 
 	// set default controller to our Blueprinted controller
 	static ConstructorHelpers::FClassFinder<APlayerController> PlayerControllerBPClass(
