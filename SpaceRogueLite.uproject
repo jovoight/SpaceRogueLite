@@ -1,29 +1,3 @@
-{
-	"FileVersion": 3,
-	"EngineAssociation": "5.5",
-	"Category": "",
-	"Description": "",
-	"Modules": [
-		{
-			"Name": "SpaceRogueLite",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"GameplayAbilities"
-			]
-		}
-	],
-	"Plugins": [
-		{
-			"Name": "ModelingToolsEditorMode",
-			"Enabled": true,
-			"TargetAllowList": [
-				"Editor"
-			]
-		},
-		{
-			"Name": "GameplayAbilities",
-			"Enabled": true
-		}
-	]
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:a57df0ca141db547f24f7249759990d7807655235afd34cfdb0ef9091a139d10
+size 440
